@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PasswordManager.MainPage"
+             Title="Менеджер паролей">
+
+    <Grid Padding="24"
+          RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,*"
+          RowSpacing="12">
+
+        <Entry x:Name="NameEntry"
+               Placeholder="Название"
+               Grid.Row="0" />
+
+        <Entry x:Name="SiteEntry"
+               Placeholder="Сайт"
+               Keyboard="Url"
+               Grid.Row="1" />
+
+        <Picker x:Name="CategoryPicker"
+                Title="Категория"
+                ItemsSource="{Binding Categories}"
+                SelectedIndex="0"
+                Grid.Row="2" />
+
+        <Grid Grid.Row="3"
+              ColumnDefinitions="*,Auto"
+              ColumnSpacing="8">
+            <Entry x:Name="PasswordEntry"
+                   Placeholder="Пароль"
+                   IsPassword="True"
+                   Grid.Column="0" />
+
+            <Button x:Name="ToggleEntryPasswordButton"
+                    Text="Показать"
+                    Clicked="OnToggleEntryPasswordClicked"
+                    Grid.Column="1" />
+        </Grid>
+
+        <Button Text="Открыть генератор паролей"
+                Clicked="OnOpenPasswordGeneratorClicked"
+                Grid.Row="4" />
+
+        <Button Text="Сохранить"
+                Clicked="OnSaveClicked"
+                Grid.Row="5" />
+
+        <CollectionView ItemsSource="{Binding Entries}"
+                        Grid.Row="6"
+                        Margin="0,12,0,0">
+            <CollectionView.EmptyView>
+                <Label Text="Сохранённых паролей пока нет."
+                       HorizontalOptions="Center"
+                       Margin="0,20" />
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <VerticalStackLayout Padding="12"
+                                         Spacing="4">
+                        <Label Text="{Binding Name}"
+                               FontAttributes="Bold" />
+                        <Label Text="{Binding Category}" />
+                        <Label Text="{Binding Site}" />
+                        <Label Text="{Binding PasswordDisplay}" />
+                        <HorizontalStackLayout Spacing="8">
+                            <Button Text="{Binding ToggleText}"
+                                    Clicked="OnTogglePasswordClicked" />
+                            <Button Text="Копировать"
+                                    Clicked="OnCopyPasswordClicked" />
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>
